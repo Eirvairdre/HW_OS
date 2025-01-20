@@ -1,0 +1,4 @@
+C:/Users/stoy2/CLionProjects/HW_3/cmake-build-debug/CMakeFiles/HW_3.dir
+C:/Users/stoy2/CLionProjects/HW_3/cmake-build-debug/CMakeFiles/REMOVE.dir
+C:/Users/stoy2/CLionProjects/HW_3/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/stoy2/CLionProjects/HW_3/cmake-build-debug/CMakeFiles/rebuild_cache.dir
