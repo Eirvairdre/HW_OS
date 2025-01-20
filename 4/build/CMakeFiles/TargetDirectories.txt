@@ -1,0 +1,4 @@
+C:/Users/stoy2/CLionProjects/HW_4/build/CMakeFiles/main.dir
+C:/Users/stoy2/CLionProjects/HW_4/build/CMakeFiles/sim.dir
+C:/Users/stoy2/CLionProjects/HW_4/build/CMakeFiles/edit_cache.dir
+C:/Users/stoy2/CLionProjects/HW_4/build/CMakeFiles/rebuild_cache.dir
