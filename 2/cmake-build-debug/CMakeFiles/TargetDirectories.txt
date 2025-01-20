@@ -1,0 +1,3 @@
+C:/Users/stoy2/CLionProjects/ProcLaunch/cmake-build-debug/CMakeFiles/ProcLaunch.dir
+C:/Users/stoy2/CLionProjects/ProcLaunch/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/stoy2/CLionProjects/ProcLaunch/cmake-build-debug/CMakeFiles/rebuild_cache.dir
