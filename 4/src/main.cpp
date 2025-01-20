@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
             } else {
                 std::cerr << "No data received" << std::endl; // Логирование, если данные не получены
             }
-            std::this_thread::sleep_for(100ms); // Уменьшите задержку до 10 мс, если нужно
+            std::this_thread::sleep_for(100ms);
         }
 
         processor.join();

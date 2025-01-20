@@ -12,7 +12,7 @@
 
 SerialPort::SerialPort(const std::string& port, int baudrate) {
 #ifdef _WIN32
-    // Открываем порт
+    // Открытие порта
     handle = CreateFileA(port.c_str(),
                          GENERIC_READ | GENERIC_WRITE,
                          0, NULL,
@@ -31,19 +31,19 @@ SerialPort::SerialPort(const std::string& port, int baudrate) {
         throw std::runtime_error("GetCommState failed for port " + port);
     }
 
-    // Устанавливаем скорость, формат кадра
-    dcb.BaudRate = baudrate;    // 9600, 115200 и т.п.
+    // Устанавка скорости, формат кадра
+    dcb.BaudRate = baudrate;
     dcb.ByteSize = 8;
     dcb.StopBits = ONESTOPBIT;
     dcb.Parity   = NOPARITY;
 
-    // Отключаем аппаратное управление потоком
+    // Отключение аппаратного управления потоком
     dcb.fOutxCtsFlow = FALSE;
     dcb.fOutxDsrFlow = FALSE;
     dcb.fDtrControl  = DTR_CONTROL_DISABLE;
     dcb.fRtsControl  = RTS_CONTROL_DISABLE;
 
-    // Отключаем программный flow control (XON/XOFF)
+    // Отключение программного flow control
     dcb.fOutX = FALSE;
     dcb.fInX  = FALSE;
 
@@ -52,9 +52,9 @@ SerialPort::SerialPort(const std::string& port, int baudrate) {
         throw std::runtime_error("SetCommState failed for port " + port);
     }
 
-    // Настраиваем таймауты на чтение/запись
+    // Настройка таймаута на чтение/запись
     COMMTIMEOUTS timeouts = {0};
-    // Задаём небольшие таймауты, чтобы не "виснуть"
+    // Установка таймаутов чтобы не висло
     timeouts.ReadIntervalTimeout         = 50;
     timeouts.ReadTotalTimeoutConstant    = 50;
     timeouts.ReadTotalTimeoutMultiplier  = 10;
@@ -67,7 +67,7 @@ SerialPort::SerialPort(const std::string& port, int baudrate) {
     }
 
 #else
-    // POSIX-ветка (Linux/macOS)
+    // POSIX-ветка
     fd = open(port.c_str(), O_RDWR | O_NOCTTY);
     if (fd < 0) {
         throw std::runtime_error("Can't open port " + port);
@@ -76,7 +76,6 @@ SerialPort::SerialPort(const std::string& port, int baudrate) {
     termios tty{};
     tcgetattr(fd, &tty);
 
-    // Пример: 9600 8N1, без контроля потока
     cfsetospeed(&tty, B9600);
     cfsetispeed(&tty, B9600);
 
@@ -84,7 +83,7 @@ SerialPort::SerialPort(const std::string& port, int baudrate) {
     tty.c_cflag &= ~CSTOPB;      // Один стоп-бит
     tty.c_cflag &= ~CSIZE;
     tty.c_cflag |= CS8;          // 8 бит
-    tty.c_cflag |= CREAD | CLOCAL; // Включаем приёмник, игнорируем линии управления
+    tty.c_cflag |= CREAD | CLOCAL; // Включенние приёмника, игнор линии управления
 
     tcsetattr(fd, TCSANOW, &tty);
 #endif
@@ -131,7 +130,6 @@ bool SerialPort::read_line(std::string& line) {
 bool SerialPort::write_data(const std::string& data) {
 #ifdef _WIN32
     DWORD bytes_written = 0;
-    // Пишем в порт
     if (!WriteFile(handle, data.c_str(), (DWORD)data.size(), &bytes_written, NULL)) {
         return false;
     }
