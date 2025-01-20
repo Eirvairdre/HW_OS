@@ -7,31 +7,31 @@
 #ifdef _WIN32
 #include <windows.h>
 
-// Функция запускает программу в фоновом режиме на Windows
+// Функция запуска программы в фоновом режиме
 int launch_background(const char* program, const char* args, intptr_t* process_id) {
     STARTUPINFO si;
     PROCESS_INFORMATION pi;
     char command_line[1024];
 
-    // Формируем команду для запуска
+    // Формирование команды для запуска
     snprintf(command_line, sizeof(command_line), "%s %s", program, args ? args : "");
 
     ZeroMemory(&si, sizeof(si));
     si.cb = sizeof(si);
 
-    // Запускаем процесс без создания нового окна
+    // Запуск процесса без создания нового окна
     if (!CreateProcess(NULL, command_line, NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi)) {
         return -1;
     }
 
-    // Сохраняем идентификатор процесса и закрываем дескрипторы
+    // Сохранение идентификатора процесса и закрытие дескрипторов
     *process_id = (intptr_t)pi.dwProcessId;
     CloseHandle(pi.hProcess);
     CloseHandle(pi.hThread);
     return 0;
 }
 
-// Функция ждет завершения процесса и получает его код возврата
+// Функция ожидания завершения процесса и получения его кода возврата
 int wait_for_completion(intptr_t process_id, unsigned int* exit_code) {
     HANDLE hProcess = OpenProcess(SYNCHRONIZE | PROCESS_QUERY_INFORMATION, FALSE, (DWORD)process_id);
     if (hProcess == NULL) return -1;
@@ -52,7 +52,7 @@ int wait_for_completion(intptr_t process_id, unsigned int* exit_code) {
 #include <unistd.h>
 #include <sys/wait.h>
 
-// Функция запускает программу в фоновом режиме на UNIX
+// Функция запуска программы в фоновом режиме
 int launch_background(const char* program, const char* args, intptr_t* process_id) {
     pid_t pid = fork();
     if (pid == -1) {
@@ -65,7 +65,6 @@ int launch_background(const char* program, const char* args, intptr_t* process_i
 
         argv[argc++] = strdup(program);
 
-        // Разбираем строку аргументов, если она есть
         if (args && strlen(args) > 0) {
             char* args_copy = strdup(args);
             if (!args_copy) {
@@ -83,14 +82,14 @@ int launch_background(const char* program, const char* args, intptr_t* process_i
 
         argv[argc] = NULL;
 
-        // Логируем перед запуском
+        // Логирование перед запуском
         printf("Executing: %s\n", program);
         for (int i = 0; argv[i] != NULL; i++) {
             printf("argv[%d] = '%s'\n", i, argv[i]);
         }
         fflush(stdout);
 
-        // Запускаем программу
+        // Запуск программы
         execvp(program, argv);
         perror("execvp");
         exit(EXIT_FAILURE);
@@ -100,7 +99,7 @@ int launch_background(const char* program, const char* args, intptr_t* process_i
     }
 }
 
-// Функция ждет завершения процесса и получает его код возврата
+// Функция ожидания завершения процесса и получения его кода возврата
 int wait_for_completion(intptr_t process_id, unsigned int* exit_code) {
     int status;
     if (waitpid((pid_t)process_id, &status, 0) == -1) {
