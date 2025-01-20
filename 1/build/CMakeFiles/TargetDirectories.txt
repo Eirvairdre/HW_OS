@@ -1,0 +1,3 @@
+/home/vboxuser/Documents/HelloWorld/build/CMakeFiles/rebuild_cache.dir
+/home/vboxuser/Documents/HelloWorld/build/CMakeFiles/edit_cache.dir
+/home/vboxuser/Documents/HelloWorld/build/CMakeFiles/hello.dir

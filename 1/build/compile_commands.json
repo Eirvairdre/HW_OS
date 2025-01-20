@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/vboxuser/Documents/HelloWorld/build",
+  "command": "/usr/bin/g++    -g   -std=gnu++17 -o CMakeFiles/hello.dir/main.cpp.o -c /home/vboxuser/Documents/HelloWorld/main.cpp",
+  "file": "/home/vboxuser/Documents/HelloWorld/main.cpp"
+}
+]
